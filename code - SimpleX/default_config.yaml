@@ -1,0 +1,63 @@
+
+
+# environment settings
+gpu_id: 0
+worker: 0
+use_gpu: true
+seed: 2020
+reproducibility: true
+data_path: dataset/
+checkpoint_dir: saved/
+show_progress: true   
+save_dataset: false
+dataset_save_path: null
+save_dataloaders: false
+dataloaders_save_path: null
+log_wandb: false        
+wandb_project: recbole
+shuffle: true
+
+# data settings
+NEG_PREFIX: neg_
+# dataset config : General Recommendation
+USER_ID_FIELD: user_id
+ITEM_ID_FIELD: item_id
+load_col:
+    inter: [user_id, item_id]
+
+# training settings
+epochs: 50
+train_batch_size: 2048
+learner: adam
+learning_rate: 0.001
+train_neg_sample_args:
+    distribution: uniform
+    sample_num: 1               
+    dynamic: false
+    candidate_num: 0 
+    
+eval_step: 1             
+stopping_step: 10
+loss_decimal_place: 4
+weight_decay: 0.0
+
+# evaluation settings
+eval_args:
+    group_by: user
+    order: RO
+    split:
+        RS:  [8,1,1]     
+            
+    mode: full
+repeatable: false
+metrics:
+    - 'Recall'
+    - 'MRR'
+    - 'NDCG'
+    - 'Hit'
+    - 'Precision'
+topk: [10,20]
+valid_metric: MRR@10            # default: MRR@10
+eval_batch_size: 4096
+metric_decimal_place: 4
+
